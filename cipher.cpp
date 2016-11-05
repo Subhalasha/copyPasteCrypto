@@ -52,6 +52,11 @@ Cipher::Cipher(const chacha20_key_t& k, const nonce_t& n) {
 	nonce = n;
 };
 
+/*
+no arguments,
+the key will be generated on instantiation
+the nonce will be start at 1 (little endian)
+*/
 Cipher::Cipher(){
 	// random key
 	randombytes_buf(key.data(), key.size());
@@ -74,13 +79,22 @@ ciphertext_t Cipher::encrypt(const std::string& plaintext,
 	sodium_increment(nonce.data(), nonce.size());
 	nonce_ret = nonce;
 
-	// test for wrap around
+	// test for nonce wrap around
 	uint8_t mask = 0;
 	for(auto &i : nonce)
 		mask |= i;
 	if(mask == 0){
 		throw std::exception();
 	}
+
+	// test for maximum plaintext
+	// -> probably libsodium is already doing that
+	if(plaintext.size() >= (size_t)CHACHA20_MAX_MSG) {
+		throw std::exception();
+	}
+
+	// test for maximum size of AD
+	// -> probably libsodium is already doing that
 
 	//
 	unsigned char* ciphertext_c = new unsigned char[plaintext.length() + crypto_aead_chacha20poly1305_IETF_ABYTES];

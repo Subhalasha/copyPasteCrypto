@@ -7,6 +7,8 @@
 
 #include <sodium.h>
 
+#define CHACHA20_MAX_MSG 247877906880
+
 using	nonce_t = std::array<uint8_t, crypto_aead_chacha20poly1305_IETF_NPUBBYTES>;
 using chacha20_key_t = std::array<uint8_t, crypto_aead_chacha20poly1305_IETF_KEYBYTES>;
 using ciphertext_t = std::vector<uint8_t>;
