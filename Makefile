@@ -1,4 +1,4 @@
-PROG= cipher
+PROG=cipher
 
 # 
 UNAME := $(shell uname)

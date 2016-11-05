@@ -21,7 +21,7 @@ public:
 	// constructor
 	Cipher(const chacha20_key_t &k);
 	Cipher();
-	~Cipher() = default;
+	~Cipher();
 
 	// returns a key
 	void generate_key();
