@@ -14,10 +14,16 @@ else
 	CXX=g++
 endif
 
-all: $(PROG)
+all: cipher
 
 cipher: main.o cipher.o
 	$(CXX) -Wall main.o cipher.o $(LFLAGS) -lsodium -o $(PROG)
+
+test: test.o cipher.o
+	$(CXX) -Wall test.o cipher.o $(LFLAGS) -lsodium -o test
+
+test.o: test.cpp cipher.h
+	$(CXX) $(CXXFLAGS) test.cpp $(CFLAGS) -c
 
 main.o: main.cpp cipher.h
 	$(CXX) $(CXXFLAGS) main.cpp $(CFLAGS) -c
@@ -29,3 +35,4 @@ cipher.o: cipher.cpp cipher.h
 
 clean:
 	rm -f *.o $(PROG)
+
