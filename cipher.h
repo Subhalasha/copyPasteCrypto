@@ -19,12 +19,9 @@ class Cipher {
 public:
 
 	// constructor
-	Cipher(const chacha20_key_t &k);
+	Cipher(const chacha20_key_t &k, const nonce_t &n);
 	Cipher();
 	~Cipher();
-
-	// returns a key
-	void generate_key();
 
 	// encrypt
 	ciphertext_t encrypt(const std::string& plaintext, const std::string& ad, nonce_t& nonce);

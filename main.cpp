@@ -11,14 +11,18 @@ int main()
 {
 	using namespace	std;
 
-	// init libsodium
+	//
+	// Init libsodium
+	//
 	if (sodium_init() == -1) {
 		cout << "can't init libsodium";
 		return 1;
 	}
 
-	// instanciate the cipher
-	//Cipher box("abcdefghjogpfldn");
+	//
+	// Instanciate the cipher
+	//
+
 	Cipher box;
 
 	while(true){
@@ -32,7 +36,6 @@ int main()
 		string ad;
 		cout << "additional data to authenticate: ";
 		cin >> ad;
-
 
 		// Encryption test
 		nonce_t nonce;
@@ -56,7 +59,6 @@ int main()
 			printf("%02x", i);
 		}
 
-
 		// Decryption test
 		string decrypted;
 
@@ -64,7 +66,7 @@ int main()
 			decrypted = box.decrypt(ciphertext, ad, nonce);
 		}
 		catch(...){
-			cout << endl << "Ciphertext has been modified";
+			cout << endl << "Can't decrypt. Ciphertext or Additional Data has been modified";
 			return 1;
 		}
 
